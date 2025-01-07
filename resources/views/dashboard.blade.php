@@ -1,37 +1,16 @@
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Admin Dashboard') }}
+            {{ __('Dashboard') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
-        <h1>Admin Dashboard</h1>
-
-        @if(session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __("You're logged in!") }}
+                </div>
             </div>
-        @endif
-
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Action</th>
-            </tr>
-            @foreach($arts as $art)
-                <tr>
-                    <td>{{ $art->title }}</td>
-                    <td>
-                        <form action="{{ route('admin.art.delete', $art->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
+        </div>
     </div>
 </x-app-layout>

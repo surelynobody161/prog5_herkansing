@@ -20,10 +20,6 @@ class Artist extends Model
         'updated_at'
     ];
 
-    public static function create(array $array)
-    {
-    }
-
     public function arts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Art::class, 'artist_id');

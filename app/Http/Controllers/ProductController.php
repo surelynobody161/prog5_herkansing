@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\art;
 use Illuminate\Http\Request;
-
 class ProductController extends Controller
 {
     /**
@@ -18,10 +15,8 @@ class ProductController extends Controller
         $art-> category_id = 'id';
         $art-> created_by = 'the goat';
         $art-> art = 'https://art.jpg';
-
         return view('art.index', compact('art'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -29,7 +24,6 @@ class ProductController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -37,7 +31,6 @@ class ProductController extends Controller
     {
         //
     }
-
     /**
      * Display the specified resource.
      */
@@ -45,18 +38,13 @@ class ProductController extends Controller
     {
         $arts = art::all();
         return view('products', compact('arts'));
-
-
-
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -64,7 +52,6 @@ class ProductController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      */

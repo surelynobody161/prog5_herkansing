@@ -1,49 +1,80 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Art;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ArtsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request)
     {
-
-
-        // Input valideren om ongewenste karakters te weren (XSS-preventie)
-        $request->validate([
-            'search' => 'string|nullable|max:255',
-            'category_id' => 'integer|nullable|exists:categories,id',
-        ]);
-
-        // Zoekopdracht en categorie filteren
+        // Start with an empty query builder for the Art model
         $query = Art::query();
 
-        if ($search = $request->input('search')) {
-            $query->where('title', 'like', '%' . e($search) . '%'); // XSS-escape
+        // Retrieve search and category filter values
+        $search = $request->input('search');
+        $categoryId = $request->input('category_id');
+
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%");
         }
 
-        if ($categoryId = $request->input('category_id')) {
+        if ($categoryId) {
             $query->where('category_id', $categoryId);
         }
 
         $arts = $query->get();
 
         return view('art.index', compact('arts'));
+
     }
 
+    public function create()
+    {
+        return view('art.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
     public function show($id)
     {
-        $art = Art::findOrFail($id);
+        $art = Art::all()->findOrFail($id); // Find the art by its ID
+        return view('art.show', compact('art')); // Return the show view with the art data
+    }
 
-        // Toegangscontrole loggen voor monitoring (Insufficient Logging and Monitoring)
-        if (Auth::guest()) {
-            Log::warning('Ongeautoriseerde toegang tot kunstwerk ID ' . $id);
-        }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
 
-        return view('arts.show', compact('art'));
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

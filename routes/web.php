@@ -8,10 +8,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ToggleController;
 //admin rules
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::delete('/dashboard/art/{id}', [AdminController::class, 'deleteArt'])->name('admin.art.delete');
-});
+//Route::middleware(['auth', 'admin'])->group(function () {
+//    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+//    Route::delete('/dashboard/art/{id}', [AdminController::class, 'deleteArt'])->name('admin.art.delete');
+//});
 //user rules
 Route::middleware('auth')->group(function () {
     Route::post('/artists/{id}/toggle-status', [ToggleController::class, 'toggleStatus'])->name('artists.toggleStatus');
@@ -21,7 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/categories', CategoryController::class);
+
     Route::get('/arts/{id}', [ArtsController::class, 'show'])->name('arts.show');
+
+
 });
 //guest rules
 Route::get('/arts', [ArtsController::class, 'index'])->name('arts.index');

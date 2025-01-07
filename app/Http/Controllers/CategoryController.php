@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\category;
 use Illuminate\Http\Request;
-
 class CategoryController extends Controller
 {
     /**
@@ -14,36 +11,30 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('category.create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate(['title' => 'required']);
-
         $category = new Category();
         $category->category = $request->input('title');
         $category->save();
         return redirect()->route('categories.create');
     }
-
     /**
      * Display the specified resource.
      */
     public function show(Request $request)
     {
-
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -51,7 +42,6 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -59,7 +49,6 @@ class CategoryController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      */
