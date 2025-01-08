@@ -2,27 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Art;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // Display the admin dashboard with a list of all arts
-    public function dashboard()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
     {
-        // Fetch all arts from the database
-        $arts = Art::all();
 
-        // Pass arts data to the dashboard view
-        return view('dashboard', compact('arts'));
+
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
+        }
+
+        if (auth()->user()->role != 'admin') {
+            return redirect('/');
+
+        }
+        // Start with an empty query builder for the Art model
+        $query = Art::query();
+
+        // Retrieve search and category filter values
+        $search = $request->input('search');
+        $categoryId = $request->input('category_id');
+
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+
+        $arts = $query->get();
+
+        return view('admin.dashboard',compact('arts'));
+
+
     }
 
-    // Method to delete an art entry
-    public function deleteArt($id)
-    {
-        $art = Art::findOrFail($id);
-        $art->delete();
-
-        return redirect()->route('admin.dashboard')->with('status', 'Art deleted successfully');
-    }
 }

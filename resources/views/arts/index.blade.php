@@ -1,5 +1,10 @@
 <x-layout>
-<!-- Search and Filter Form -->
+    @auth
+        <a href="{{ route('arts.create') }}" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300">Maak een nieuwe aan</a>
+    @endauth
+
+
+    <!-- Search and Filter Form -->
 <div class="container mx-auto mt-8 mb-6">
     <form method="GET" action="{{ route('arts.index') }}" class="flex space-x-4">
         <label>
@@ -14,6 +19,7 @@
             </select>
         </label>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Filter</button>
+
     </form>
 </div>
 
@@ -31,6 +37,8 @@
                 <img src="{{ asset($art->art) }}" alt="{{ $art->title }}" class="w-full h-auto rounded-lg mb-4">
                 <!-- Details Button -->
                 <a href="{{ route('arts.show', $art->id) }}" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300">Details</a>
+                <a href="{{ route('arts.edit', $art->id) }}" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-300">Pas aan</a>
+
             </div>
         @endforeach
     </ul>

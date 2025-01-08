@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('artists', function (Blueprint $table) {
-            $table->boolean('is_alive')->default(true);
+        Schema::table('arts', function (Blueprint $table) {
+            $table->string('active')->nullable();
         });
     }
 
@@ -21,8 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('artists', function (Blueprint $table) {
-            $table->dropColumn('is_alive');
+        Schema::table('arts', function (Blueprint $table) {
+            $table->dropColumn('art');
+
         });
     }
 };

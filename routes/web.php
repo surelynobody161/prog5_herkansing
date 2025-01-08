@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ToggleController;
@@ -22,17 +23,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/categories', CategoryController::class);
 
-    Route::get('/arts/{id}', [ArtsController::class, 'show'])->name('arts.show');
+//    Route::get('/arts/{id}', [ArtsController::class, 'show'])->name('arts.show');
+
 
 
 });
 //guest rules
-Route::get('/arts', [ArtsController::class, 'index'])->name('arts.index');
+
+Route::resource('/arts', ArtsController::class);
+Route::post('arts/{art}/toggleActive', [ArtsController::class, 'toggleActive'])->name('art.toggleActive');
+Route::resource('admin', AdminController::class);
+
+Route::resource('/', HomeController::class);
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 
 require __DIR__.'/auth.php';
