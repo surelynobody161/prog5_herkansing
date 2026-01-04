@@ -1,14 +1,38 @@
 <?php
+
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 class Art extends Model
 {
-    protected $table = 'arts';
-    protected $fillable = ['title', 'description', 'category_id', 'created_by', 'C:\eindopdracht\_images'];
+    use HasFactory;
 
+    protected $table = 'arts';
+
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'category_id',
+        'user_id',
+        'active',
+    ];
+
+    /**
+     * Elk art piece hoort bij één gebruiker
+     */
     public function user()
     {
-        return $this->belongsTo(User::class);  // Assuming the Game model has a 'user_id' foreign key
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Elk art piece hoort bij één categorie
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
