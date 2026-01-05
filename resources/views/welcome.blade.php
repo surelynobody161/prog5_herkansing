@@ -170,3 +170,5 @@
         </div>
     </body>
 </html>
+/ /   A d d e d   w e l c o m e   v i e w   s t y l i n g   i d e a s  
+ 
